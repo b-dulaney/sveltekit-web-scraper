@@ -12,7 +12,7 @@
 	}
 </script>
 
-<div class="flex justify-center items-center min-h-svh min-w-full px-2">
+<div class="flex justify-center items-center min-w-full px-2">
 	<div class="rounded-lg px-4 bg-slate-50 shadow-lg min-h-80">
 		<div class="flex flex-col items-center gap-8 py-8">
 			<h1 class="text-zinc-900 text-center font-extrabold text-2xl sm:text-3xl tracking-tight">
