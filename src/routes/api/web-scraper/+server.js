@@ -2,6 +2,7 @@ import puppeteer from 'puppeteer-core';
 import chromium from '@sparticuz/chromium-min';
 import { dev } from '$app/environment';
 import { json } from '@sveltejs/kit';
+import { LOCAL_CHROMIUM_PATH } from '$env/static/private';
 
 export async function POST({ request }) {
 	const { url } = await request.json();
@@ -10,7 +11,7 @@ export async function POST({ request }) {
 		args: chromium.args,
 		defaultViewport: chromium.defaultViewport,
 		executablePath: dev
-			? '/tmp/localChromium/chromium/linux-1274330/chrome-linux/chrome'
+			? LOCAL_CHROMIUM_PATH
 			: await chromium.executablePath(
 					'https://github.com/Sparticuz/chromium/releases/download/v110.0.1/chromium-v110.0.1-pack.tar'
 				)
