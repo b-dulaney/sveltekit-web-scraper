@@ -22,7 +22,6 @@
 			placeholder="https://example.com"
 			type="text"
 			name="pageURL"
-			required
 			bind:value
 		/>
 	{:else}
@@ -31,7 +30,6 @@
 			placeholder="https://example.com"
 			type="text"
 			name="pageURL"
-			required
 			bind:value
 		/>
 	{/if}
