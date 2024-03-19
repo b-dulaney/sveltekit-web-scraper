@@ -2,7 +2,7 @@ import puppeteer from 'puppeteer-core';
 import chromium from '@sparticuz/chromium-min';
 import { dev } from '$app/environment';
 import { json } from '@sveltejs/kit';
-import { LOCAL_CHROMIUM_PATH } from '$env/static/private';
+import { LOCAL_CHROMIUM_PATH, VERCEL_BLOB_URL } from '$env/static/private';
 
 export async function POST({ request }) {
 	const { url } = await request.json();
@@ -10,11 +10,7 @@ export async function POST({ request }) {
 	const browser = await puppeteer.launch({
 		args: chromium.args,
 		defaultViewport: chromium.defaultViewport,
-		executablePath: dev
-			? LOCAL_CHROMIUM_PATH
-			: await chromium.executablePath(
-					'https://github.com/Sparticuz/chromium/releases/download/v110.0.1/chromium-v110.0.1-pack.tar'
-				)
+		executablePath: dev ? LOCAL_CHROMIUM_PATH : await chromium.executablePath(VERCEL_BLOB_URL)
 	});
 
 	const page = await browser.newPage();
