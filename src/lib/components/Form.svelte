@@ -25,7 +25,7 @@
 	}
 </script>
 
-<form class="flex justify-center min-w-full gap-2" on:submit={handleSubmit}>
+<form class="flex justify-center min-w-full gap-2" method="POST" on:submit={handleSubmit}>
 	<Input bind:value={url} />
 	<Button disabled={!url} {loading} on:click={handleSubmit} />
 </form>

@@ -2,7 +2,12 @@ import puppeteer from 'puppeteer-core';
 import chromium from '@sparticuz/chromium-min';
 import { dev } from '$app/environment';
 import { json } from '@sveltejs/kit';
-import { LOCAL_CHROMIUM_PATH, VERCEL_BLOB_URL } from '$env/static/private';
+import {
+	BLOB_READ_WRITE_TOKEN,
+	LOCAL_CHROMIUM_PATH,
+	CHROMIUM_DOWNLOAD_URL
+} from '$env/static/private';
+import { put } from '@vercel/blob';
 
 export async function POST({ request }) {
 	const { url } = await request.json();
@@ -10,7 +15,7 @@ export async function POST({ request }) {
 	const browser = await puppeteer.launch({
 		args: chromium.args,
 		defaultViewport: chromium.defaultViewport,
-		executablePath: dev ? LOCAL_CHROMIUM_PATH : await chromium.executablePath(VERCEL_BLOB_URL)
+		executablePath: dev ? LOCAL_CHROMIUM_PATH : await chromium.executablePath(CHROMIUM_DOWNLOAD_URL)
 	});
 
 	const page = await browser.newPage();
@@ -24,17 +29,41 @@ export async function POST({ request }) {
 		}
 	} catch (/** @type {any}*/ e) {
 		await browser.close();
-		return json({ success: false, message: e?.message });
+		return json({ success: false, message: e?.message ?? 'An unknown error occured' });
 	}
 
-	try {
-		const headingElement = await page.waitForSelector('h1', { timeout: 5000 });
-		const heading = await headingElement?.evaluate((el) => el.textContent);
+	const screenshot = await page.screenshot({ type: 'webp' });
+	await browser.close();
 
-		await browser.close();
-		return json({ success: true, message: heading });
-	} catch (e) {
-		await browser.close();
-		return json({ success: false, message: 'Not found' });
-	}
+	const imageUrl = await uploadImage(screenshot, url);
+	return json({ success: true, message: imageUrl });
+}
+
+/**
+ * Uploads the image to vercel blob storage and returns the image url
+ * @param {Buffer} buffer
+ * @param {string} pageUrl
+ */
+async function uploadImage(buffer, pageUrl) {
+	const pathName = trimUrl(pageUrl);
+	const { url } = await put(`screenshots/${pathName}`, buffer, {
+		access: 'public',
+		token: BLOB_READ_WRITE_TOKEN,
+		contentType: 'image/webp'
+	});
+
+	return url;
+}
+
+/**
+ * Trims http protocol and any trailing slashes from the url to prevent extra folder creation in vercel blob storage
+ * @param {string} url
+ * @returns {string}
+ */
+function trimUrl(url) {
+	// Remove leading protocol
+	let trimmedUrl = url.replace(/(^\w+:|^)\/\//, '');
+	// Remove trailing slashes
+	trimmedUrl = trimmedUrl.replace(/\/+$/, '');
+	return trimmedUrl;
 }
