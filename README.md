@@ -1,5 +1,7 @@
 # 🤠 SvelteKit Web Scraper Demo
 
+Live url: [https://sveltekit-web-scraper.vercel.app/](https://sveltekit-web-scraper.vercel.app/)
+
 Does your SvelteKit application rely on data that is scraped from the web? Are you too lazy to create and deploy a separate Python backend? Do you think we should program predator missiles with JavaScript?
 
 If you answered yes to any of those questions - look no further. This application demonstrates how to use [Puppeteer](https://pptr.dev/) in a serverless environment in order to scrape data from the web. By using SvelteKit's API route functionality, you can kick off web scraping jobs from within your SvelteKit code or from a separate location (like a cron job or an API request from another server).
