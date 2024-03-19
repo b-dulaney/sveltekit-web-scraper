@@ -3,7 +3,6 @@
 
 	/** @type {boolean}*/
 	export let loading;
-
 </script>
 
 {#if loading}

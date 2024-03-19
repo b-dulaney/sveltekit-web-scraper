@@ -10,15 +10,19 @@
 			<h1 class="text-zinc-900 text-center font-extrabold text-2xl sm:text-3xl tracking-tight">
 				SvelteKit Web Scraper
 			</h1>
-			<p class="text-zinc-800 text-center text-lg sm:text-xl max-w-xl">
-				Enter a valid URL to take a screenshot of the page using SvelteKit form actions and Puppeteer
-				🤠
+			<p class="text-zinc-800 text-center text-lg sm:text-xl max-w-lg">
+				Enter a valid URL to take a screenshot of the page using SvelteKit form actions and
+				Puppeteer 🤠
 			</p>
-			<Form form={form} />
+			<Form {form} />
 			<div class="flex-col gap-2 text-center max-w-xl">
 				{#if form?.success}
 					<p class="text-zinc-900 text-xl">🎉 Screenshot Taken!</p>
-					<img src={form?.imageURL} alt={`Screenshot of ${form?.pageURL}`} class="rounded-lg shadow-lg pt-4" />
+					<img
+						src={form?.imageURL}
+						alt={`Screenshot of ${form?.pageURL}`}
+						class="rounded-lg shadow-lg mt-4"
+					/>
 				{:else if form?.error}
 					<p class="text-zinc-900 text-lg">🤔 Something went wrong</p>
 					<p class="text-zinc-900 font-semibold py-4 text-lg">{form?.error}</p>

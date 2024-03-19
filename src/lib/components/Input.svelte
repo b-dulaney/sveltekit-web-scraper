@@ -18,12 +18,12 @@
 	</span>
 	{#if form?.missing || form?.invalid}
 		<input
-		class="placeholder:italic h-10 placeholder:text-zinc-400 block w-full bg-white border border-red-500 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-red-500 focus:ring-red-500 focus:ring-1 sm:text-sm"
-		placeholder="https://example.com"
-		type="text"
-		name="pageURL"
-		required
-		bind:value={value}
+			class="placeholder:italic h-10 placeholder:text-zinc-400 block w-full bg-white border border-red-500 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-red-500 focus:ring-red-500 focus:ring-1 sm:text-sm"
+			placeholder="https://example.com"
+			type="text"
+			name="pageURL"
+			required
+			bind:value
 		/>
 	{:else}
 		<input
@@ -32,8 +32,7 @@
 			type="text"
 			name="pageURL"
 			required
-			bind:value={value}
+			bind:value
 		/>
 	{/if}
 </label>
-

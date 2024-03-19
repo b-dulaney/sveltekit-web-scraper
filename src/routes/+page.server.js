@@ -64,7 +64,10 @@ async function takeScreenshot(pageURL) {
 		throw new Error(`Failed to load page: ${e?.message}`);
 	}
 
-	const screenshot = await page.screenshot({ type: 'webp', captureBeyondViewport: false });
+	const screenshot = await page.screenshot({
+		type: 'webp',
+		captureBeyondViewport: false
+	});
 	await browser.close();
 	return screenshot;
 }
