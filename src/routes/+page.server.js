@@ -25,17 +25,14 @@ export const actions = {
 			return fail(400, { pageURL, invalid: true });
 		}
 
-		try {
-			const data = await fetch('/api/web-scraper', {
-				method: 'POST',
-				body: JSON.stringify({ url: pageURL })
-			});
+		const response = await fetch('/api/web-scraper', {
+			method: 'POST',
+			body: JSON.stringify({ url: pageURL })
+		});
 
-			/** @type {WebScraperResponse} */
-			const { success, imageURL, error } = await data.json();
-			return { success, imageURL, error, pageURL };
-		} catch (/** @type {any} */ e) {
-			return fail(500, { error: e?.message });
-		}
+		/** @type {WebScraperResponse} */
+		const { success, imageURL, error } = await response.json();
+
+		return { success, imageURL, error, pageURL };
 	}
 };
