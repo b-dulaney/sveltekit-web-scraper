@@ -1,15 +1,7 @@
 <script>
 	import Form from '$lib/components/Form.svelte';
-	let pageSuccess = false;
-	let imageUrl = '';
-
-	/**
-	 * @param {CustomEvent<{success: boolean, message: string}>} event
-	 */
-	function handleResponse(event) {
-		pageSuccess = event.detail.success;
-		imageUrl = event.detail.message;
-	}
+	/** @type {import('./$types').ActionData} */
+	export let form;
 </script>
 
 <div class="flex justify-center items-center min-w-full px-2">
@@ -19,17 +11,17 @@
 				SvelteKit Web Scraper
 			</h1>
 			<p class="text-zinc-800 text-center text-lg sm:text-xl max-w-xl">
-				Enter a valid URL to take a screenshot of the page using SvelteKit API routes and Puppeteer
+				Enter a valid URL to take a screenshot of the page using SvelteKit form actions and Puppeteer
 				🤠
 			</p>
-			<Form on:response={handleResponse} />
+			<Form form={form} />
 			<div class="flex-col gap-2 text-center max-w-xl">
-				{#if pageSuccess}
+				{#if form?.success}
 					<p class="text-zinc-900 text-xl">🎉 Screenshot Taken!</p>
-					<img src={imageUrl} alt={`Screenshot of ${imageUrl}`} class="rounded-lg shadow-lg pt-4" />
-				{:else if !pageSuccess && imageUrl}
+					<img src={form?.imageURL} alt={`Screenshot of ${form?.pageURL}`} class="rounded-lg shadow-lg pt-4" />
+				{:else if form?.error}
 					<p class="text-zinc-900 text-lg">🤔 Something went wrong</p>
-					<p class="text-zinc-900 font-semibold py-4 text-lg">{imageUrl}</p>
+					<p class="text-zinc-900 font-semibold py-4 text-lg">{form?.error}</p>
 					<p class="text-zinc-800 text-sm">
 						Make sure to provide the full URL starting with <span class="italic">https://</span>
 					</p>

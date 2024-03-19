@@ -1,31 +1,29 @@
 <script>
+	import { enhance, applyAction } from '$app/forms';
 	import Input from './Input.svelte';
 	import Button from './Button.svelte';
-	import { createEventDispatcher } from 'svelte';
-	const dispatch = createEventDispatcher();
-	let url = '';
 	let loading = false;
+	
+	/** @type {import('../../routes/$types').ActionData}*/
+	export let form;
 
-	/**
-	 * @param {SubmitEvent|MouseEvent} event
-	 */
-	async function handleSubmit(event) {
-		event.preventDefault();
-		loading = true;
-		const response = await fetch('/api/web-scraper', {
-			method: 'POST',
-			body: JSON.stringify({ url })
-		});
-		const { success, message } = await response.json();
-		loading = false;
-		dispatch('response', {
-			success,
-			message
-		});
-	}
 </script>
 
-<form class="flex justify-center min-w-full gap-2" method="POST" on:submit={handleSubmit}>
-	<Input bind:value={url} />
-	<Button disabled={!url} {loading} on:click={handleSubmit} />
+<form class="flex flex-col w-full sm:w-3/4 gap-2" method="POST" use:enhance={() => {
+	loading = true;
+	if(form){
+		form.missing = false;
+		form.invalid = false;
+	}
+	return async ({result}) => {
+		loading = false;
+		await applyAction(result)
+	}
+}}>
+	<div class="flex justify-center w-full items-center gap-2">
+		<Input form={form}/>
+		<Button loading={loading}/>
+	</div>
+	{#if form?.missing}<p class="text-red-500">URL is required</p>{/if}
+	{#if form?.invalid}<p class="text-red-500 text-center">Invalid URL format. Make sure you include HTTP protocol <span class="italic">(https://example.com)</span></p>{/if}
 </form>

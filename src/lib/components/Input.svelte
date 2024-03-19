@@ -1,10 +1,12 @@
 <script>
+	/** @type {import('../../routes/$types').ActionData}*/
+	export let form;
 	/** @type {string}*/
-	export let value;
+	let value = '';
 </script>
 
-<label class="relative block">
-	<span class="sr-only">Search</span>
+<label class="relative block w-full">
+	<span class="sr-only">URL to Screenshot</span>
 	<span class="absolute inset-y-0 left-0 flex items-center pl-2">
 		<svg class="h-5 w-5 fill-zinc-500" viewBox="0 0 20 20">
 			<path
@@ -14,11 +16,24 @@
 			></path>
 		</svg>
 	</span>
-	<input
-		bind:value
-		class="placeholder:italic placeholder:text-zinc-400 block bg-white w-full border border-zinc-500 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-pink-500 focus:ring-pink-500 focus:ring-1 sm:text-sm"
+	{#if form?.missing || form?.invalid}
+		<input
+		class="placeholder:italic h-10 placeholder:text-zinc-400 block w-full bg-white border border-red-500 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-red-500 focus:ring-red-500 focus:ring-1 sm:text-sm"
 		placeholder="https://example.com"
 		type="text"
-		name="search"
-	/>
+		name="pageURL"
+		required
+		bind:value={value}
+		/>
+	{:else}
+		<input
+			class="placeholder:italic h-10 placeholder:text-zinc-400 block w-full bg-white border border-zinc-500 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-pink-500 focus:ring-pink-500 focus:ring-1 sm:text-sm"
+			placeholder="https://example.com"
+			type="text"
+			name="pageURL"
+			required
+			bind:value={value}
+		/>
+	{/if}
 </label>
+
