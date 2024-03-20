@@ -11,7 +11,7 @@
 	out:fade={{ duration: 200 }}
 >
 	<svg
-		class="fill-zinc-600 w-24 h-24 sm:w-32 sm:h-32"
+		class="fill-zinc-400 w-24 h-24 sm:w-32 sm:h-32"
 		version="1.1"
 		viewBox="0 0 30 30"
 		xml:space="preserve"
