@@ -29,8 +29,8 @@
 				SvelteKit Web Scraper
 			</h1>
 			<p class="text-zinc-800 text-center text-lg sm:text-xl max-w-lg">
-				Enter a valid URL to take a screenshot of the page using SvelteKit API routes and
-				Puppeteer 🤠
+				Enter a valid URL to take a screenshot of the page using SvelteKit API routes and Puppeteer
+				🤠
 			</p>
 			<Form {form} on:loadEvent={handleLoading} {loading} />
 			<Screenshot {loading} {form} />
