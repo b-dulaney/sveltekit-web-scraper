@@ -10,9 +10,9 @@ export async function GET({ request }) {
 	}
 
 	const { blobs } = await list({ prefix: 'screenshots/' });
-	blobs.forEach(async (blob) => {
-		await del(blob.url);
-	});
+	const blobsToDelete = blobs.map(({ url }) => url);
 
+	await del(blobsToDelete);
+	console.log(`Deleted ${blobsToDelete.length} screenshots`);
 	return json({ success: true });
 }
