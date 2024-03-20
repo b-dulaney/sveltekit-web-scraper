@@ -76,7 +76,11 @@ LOCAL_CHROMIUM_PATH
 
 `CRON_SECRET` should only exist in Production. It is sent by Vercel Cron as an auth header when it calls our daily-cleanup function. This makes sure that nobody else can hit our public endpoint and prematurely delete all of our sweet screenshots. Vercel recommends that you make this something hard to guess. So create an alphanumeric password with special characters and make it at least 16 characters in length.
 
-`LOCAL_CHROMIUM_PATH` should exist in all environments. It is the location of the Chromium installation on your machine. You'll need this to develop and test your changes locally. See the section below on how to get the value if you haven't already.
+`LOCAL_CHROMIUM_PATH` should exist in all environments. It is the location of the Chromium installation on your machine. You'll need this to develop and test your changes locally. See the section below on how to get the value if you haven't already. It should look something like this depending on your OS:
+
+```env
+LOCAL_CHROMIUM_PATH="/tmp/localChromium/chromium/linux-1274330/chrome-linux/chrome"
+```
 
 Once you've saved these variables in Vercel, run `vercel env pull .env.development.local` to create the env file in your local project.
 

@@ -43,10 +43,12 @@ async function takeScreenshot(pageURL) {
 		const response = await page.goto(pageURL);
 		if (response && !response.ok) {
 			await browser.close();
+			console.warn(`Failed to load page: ${response.status()} ${response.statusText()}`);
 			throw new Error(`Failed to load page: ${response.status()} ${response.statusText()}`);
 		}
 	} catch (/** @type {any}*/ e) {
 		await browser.close();
+		console.warn(`Failed to load page: ${e?.message}`);
 		throw new Error(`Failed to load page: ${e?.message}`);
 	}
 
