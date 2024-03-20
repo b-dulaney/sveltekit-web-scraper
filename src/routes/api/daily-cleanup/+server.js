@@ -9,8 +9,8 @@ export async function GET({ request }) {
 		return json({ error: 'Unauthorized' }, { status: 401 });
 	}
 
-	const blobs = await list({ prefix: 'screenshots/' });
-	blobs.blobs.forEach(async (blob) => {
+	const { blobs } = await list({ prefix: 'screenshots/' });
+	blobs.forEach(async (blob) => {
 		await del(blob.url);
 	});
 
