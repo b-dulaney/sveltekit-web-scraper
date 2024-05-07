@@ -22,7 +22,7 @@ To stay under the size limit, we use the [@sparticuz/chromium-min](https://www.n
 
 I would recommend going through the entire [@sparticuz/chromium-min README](https://github.com/Sparticuz/chromium) to understand the version matching requirements and to get a better idea of what's going on under the hood.
 
-This app's `puppeteer-core` version is pinned at `19.6.3` and it uses Chromium `v110.0.1`.
+This app's `puppeteer-core` version is pinned at `22.6.0` and it uses Chromium `v123.0.1`.
 
 ## Deployment Notes
 
